@@ -1,0 +1,33 @@
+
+body {
+    font-family: Arial;
+    background-color: #fdf1d3;
+    margin: 10px;
+    margin-top: 20px;
+    padding: 0;
+}
+img {
+    width: 200px;
+    height: 150px;
+    display: block;
+}
+
+label {
+    text-align: left;
+    margin-top: 60px;
+
+}
+
+input {
+    font-family: Arial;
+    width: 20%;
+    padding: 5px;
+    margin-top: 50px;
+    border: 1px #ccc;
+    height: 30px;
+}
+.grid{
+    display: grid;
+    grid-template-columns: 20% 80%;
+   
+}

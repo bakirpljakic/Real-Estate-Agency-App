@@ -2,6 +2,7 @@ body{
     background-color: #fdf1d3;
     display: flex;
     justify-content: center;
+    height: 100px;
   }
 ul{
     display: flex;

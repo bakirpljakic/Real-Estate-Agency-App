@@ -1,3 +1,55 @@
-body{
-    background-color: #fdf1d3 ;
+body {
+    font-family: Arial, sans-serif;
+    background-color:  #fdf1d3;
+}
+
+#stan, #kuca, #pp {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+  
+
+h2 {
+    text-align: center;
+}
+
+.nekretnina {
+    background-color: white; /* Bijela boja za stanove */
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 300px;
+}
+
+.nekretnina img {
+    max-width: 100%;
+    height: auto;
+}
+
+.informacije {
+    text-align: left;
+    padding: 10px;
+}
+
+.naziv {
+    text-align: center;
+    font-weight: bold;
+    margin: 0;
+}
+
+.cijena, .kvadratura {
+    text-align: center;
+    padding: 5px;
+    margin: 0;
+}
+
+.detalji {
+    display: block;
+    margin: 0 auto;
+    background-color: #3498db; /* Svijetloplava boja za kuće */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
 }

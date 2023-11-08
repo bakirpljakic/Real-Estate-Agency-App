@@ -5,24 +5,27 @@ body {
 
 #stan, #kuca, #pp {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, 300px);
     gap: 20px;
 }
 
-  
-
-h2 {
-    text-align: center;
+.stanovi {
+    background-color: white; 
+    border: 1px solid #ccc;
+    width: 300px;
 }
-
-.nekretnina {
-    background-color: white; /* Bijela boja za stanove */
-    padding: 20px;
+.nekretnina{
+    background-color: powderblue; 
+    border: 1px solid #ccc;
+    width: 300px;
+}
+.prostor{
+    background-color: green; 
     border: 1px solid #ccc;
     width: 300px;
 }
 
-.nekretnina img {
+ img {
     max-width: 100%;
     height: auto;
 }
@@ -33,23 +36,35 @@ h2 {
 }
 
 .naziv {
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     margin: 0;
 }
+.kvadratura{
+    text-align: left;
+    padding-top: 5px;
+    margin: 0;
+}
 
-.cijena, .kvadratura {
-    text-align: center;
+.cijena{
+    text-align: right;
     padding: 5px;
     margin: 0;
 }
 
 .detalji {
     display: block;
-    margin: 0 auto;
+    margin: auto;
+    margin-bottom: 5px;
     background-color: #3498db; /* Svijetloplava boja za kuće */
     color: #fff;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
+}
+iframe{
+    margin: 0 auto;
+    width: 100%;
+    height: 51px;
+    border: none;
 }

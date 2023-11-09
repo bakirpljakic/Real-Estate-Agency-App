@@ -5,17 +5,19 @@ body{
     height: 100px;
   }
 ul{
+    padding-top: 10px;
     display: flex;
     list-style: none;
     margin: 0;
-    padding: 0;
+    justify-content: center;
 }
 li{
     display: block;
     font-weight: bold;
     color: blue;
     font-size: 20px;
-    padding: 0px 16px; 
+    padding-left: 20px;
+    padding-right: 20px;
 }
 li a{
     text-decoration: none;

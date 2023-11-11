@@ -1,0 +1,6 @@
+Za validaciju sam koristio https://validator.w3.org/ validator.
+Imao sam 4 greške u svim html datotekama i 1 grešku u css datotekama.
+U html datotekama je zapravo ista greška, ali u četiri datoteke, a to je greška da sam u iframe tagu koristio 
+"scrolling=no", umjesto da to uradim u css-u.
+U css datoteci detalji sam napravio grešku u pisanju, te sam na jednom mjestu umjesto paddin-top: 0px, napisao umjesto 0 slovo o.
+

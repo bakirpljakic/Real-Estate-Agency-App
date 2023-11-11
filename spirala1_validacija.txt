@@ -3,4 +3,7 @@ Imao sam 4 greške u svim html datotekama i 1 grešku u css datotekama.
 U html datotekama je zapravo ista greška, ali u četiri datoteke, a to je greška da sam u iframe tagu koristio 
 "scrolling=no", umjesto da to uradim u css-u.
 U css datoteci detalji sam napravio grešku u pisanju, te sam na jednom mjestu umjesto paddin-top: 0px, napisao umjesto 0 slovo o.
+Scrolling=no nisam mogao rijesiti tako sto bih u css datotekama dodao za iframe tu opciju, jer te opcije nema, vec sam morao u ccs 
+datoteci menija u dijelu body dodati overflow=hidden.
+
 

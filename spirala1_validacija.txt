@@ -5,5 +5,8 @@ U html datotekama je zapravo ista greška, ali u četiri datoteke, a to je greš
 U css datoteci detalji sam napravio grešku u pisanju, te sam na jednom mjestu umjesto paddin-top: 0px, napisao umjesto 0 slovo o.
 Scrolling=no nisam mogao rijesiti tako sto bih u css datotekama dodao za iframe tu opciju, jer te opcije nema, vec sam morao u ccs 
 datoteci menija u dijelu body dodati overflow=hidden.
+Za soluciju 2. zadatka koristio sam media query kako bih postavio druge stilove za razlicite velicine, tj. tacnije za ekrane vece od 500px.
+Napravio sam promjene na izgledu slike i .gridu kako bi se postigle trazene promjene.
+
 
 

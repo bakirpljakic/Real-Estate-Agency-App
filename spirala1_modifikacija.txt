@@ -1,0 +1,2 @@
+Za rješavanje 2. zadatka koristio sam media query kako bih postavio druge stilove za razlicite velicine,
+tj. tacnije za ekrane vece od 500px. Napravio sam promjene na izgledu slike i .gridu kako bi se postigle trazene promjene.

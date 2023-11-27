@@ -38,12 +38,14 @@ function spojiNekretnine(divReferenca, instancaModula, tip_nekretnine) {
             divNekretnina.style.backgroundColor = "green";
         }
 
+  
         divInformacije.appendChild(naziv);
         divInformacije.appendChild(kvadratura);
         divInformacije.appendChild(cijena);
         divNekretnina.appendChild(image);
         divNekretnina.appendChild(divInformacije);
         divNekretnina.appendChild(buttonDetalji);
+        if(divReferenca)
         divReferenca.appendChild(divNekretnina);
 
     });
@@ -96,6 +98,120 @@ const listaNekretnina = [{
     kvadratura: 150,
     cijena: 350000,
     tip_grijanja: "plin",
+    lokacija: "Centar",
+    godina_izgradnje: 2005,
+    datum_objave: "20.08.2023.",
+    opis: "Magnis dis parturient montes.",
+    upiti: [{
+        korisnik_id: 2,
+        tekst_upita: "Integer tincidunt."
+    }
+    ]
+}, 
+{
+    id: 4,
+    tip_nekretnine: "Stan",
+    naziv: "Useljiv stan Zenica",
+    kvadratura: 58,
+    cijena: 212000,
+    tip_grijanja: "struja",
+    lokacija: "Jalija",
+    godina_izgradnje: 2019,
+    datum_objave: "01.10.2023.",
+    opis: "Sociis natoque penatibus.",
+    upiti: [{
+        korisnik_id: 1,
+        tekst_upita: "Nullam eu pede mollis pretium."
+    },
+    {
+        korisnik_id: 2,
+        tekst_upita: "Phasellus viverra nulla."
+    }]
+}, 
+{
+    id: 5,
+    tip_nekretnine: "Stan",
+    naziv: "Useljiv stan Mostar",
+    kvadratura: 70,
+    cijena: 300000,
+    tip_grijanja: "plin",
+    lokacija: "Čulevići",
+    godina_izgradnje: 2019,
+    datum_objave: "01.10.2023.",
+    opis: "Sociis natoque penatibus.",
+    upiti: [{
+        korisnik_id: 1,
+        tekst_upita: "Nullam eu pede mollis pretium."
+    },
+    {
+        korisnik_id: 2,
+        tekst_upita: "Phasellus viverra nulla."
+    }]
+}, 
+{
+    id: 6,
+    tip_nekretnine: "Kuća",
+    naziv: "Kuća Semizovac",
+    kvadratura: 158,
+    cijena: 212000,
+    tip_grijanja: "struja",
+    lokacija: "Semizovac",
+    godina_izgradnje: 2019,
+    datum_objave: "01.10.2023.",
+    opis: "Sociis natoque penatibus.",
+    upiti: [{
+        korisnik_id: 1,
+        tekst_upita: "Nullam eu pede mollis pretium."
+    },
+    {
+        korisnik_id: 2,
+        tekst_upita: "Phasellus viverra nulla."
+    }]
+},
+{
+    id: 7,
+    tip_nekretnine: "Kuća",
+    naziv: "Kuća Bjelace",
+    kvadratura: 158,
+    cijena: 500000,
+    tip_grijanja: "struja",
+    lokacija: "Derebent",
+    godina_izgradnje: 2019,
+    datum_objave: "01.10.2023.",
+    opis: "Sociis natoque penatibus.",
+    upiti: [{
+        korisnik_id: 1,
+        tekst_upita: "Nullam eu pede mollis pretium."
+    },
+    {
+        korisnik_id: 2,
+        tekst_upita: "Phasellus viverra nulla."
+    }]
+}, 
+{
+    id: 8,
+    tip_nekretnine: "Poslovni prostor",
+    naziv: "Mali poslovni prostor",
+    kvadratura: 30,
+    cijena: 90000,
+    tip_grijanja: "struja",
+    lokacija: "Centar",
+    godina_izgradnje: 2005,
+    datum_objave: "20.08.2023.",
+    opis: "Magnis dis parturient montes.",
+    upiti: [{
+        korisnik_id: 2,
+        tekst_upita: "Integer tincidunt."
+    }
+    ]
+},
+{
+    id: 9,
+    tip_nekretnine: "Poslovni prostor",
+    naziv: "Ekskluzivan poslovni prostor",
+    kvadratura: 80,
+    cijena: 400000,
+    tip_grijanja: "struja",
     lokacija: "Centar",
     godina_izgradnje: 2005,
     datum_objave: "20.08.2023.",

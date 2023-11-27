@@ -1,10 +1,53 @@
 function spojiNekretnine(divReferenca, instancaModula, tip_nekretnine) {
-    // pozivanje metode za filtriranje
-    instancaModula.filtrirajNekretnine({ tip_nekretnine: tip_nekretnine });
-    // iscrtavanje elemenata u divReferenca element
+    const nekretnine = instancaModula.filtrirajNekretnine({ tip_nekretnine: tip_nekretnine });
+    
 
+    nekretnine.forEach(nekretnina => {
+
+        const divNekretnina = document.createElement("div");
+        divNekretnina.classList.add("nekretnina");
+        const image = document.createElement("img");
+        image.src = "https://prostor.ba/img/s/1200x800/upload/images/properties/11651/35a77b5a368c0cb5fa3c19e4d1f3e7a7.jpg"
+        image.alt = nekretnina.naziv
+
+        const divInformacije = document.createElement("div");
+        divInformacije.classList.add("informacije");
+
+        const naziv = document.createElement("p");
+        naziv.classList.add("naziv");
+        naziv.textContent = nekretnina.naziv
+
+        const kvadratura = document.createElement("p");
+        kvadratura.classList.add("kvadratura");
+        kvadratura.textContent = nekretnina.kvadratura
+
+        const cijena = document.createElement("p");
+        cijena.classList.add("cijena");
+        cijena.textContent = nekretnina.cijena
+
+        const buttonDetalji = document.createElement("button");
+        buttonDetalji.classList.add("detalji");
+        buttonDetalji.textContent = "Detalji"
+
+
+        if (nekretnina.tip_nekretnine === "Stan") {
+            divNekretnina.style.backgroundColor = "white";
+        } else if(nekretnina.tip_nekretnine ==="Kuća"){
+            divNekretnina.style.backgroundColor = "powderblue";
+        } else if(nekretnina.tip_nekretnine === "Poslovni prostor") {
+            divNekretnina.style.backgroundColor = "green";
+        }
+
+        divInformacije.appendChild(naziv);
+        divInformacije.appendChild(kvadratura);
+        divInformacije.appendChild(cijena);
+        divNekretnina.appendChild(image);
+        divNekretnina.appendChild(divInformacije);
+        divNekretnina.appendChild(buttonDetalji);
+        divReferenca.appendChild(divNekretnina);
+
+    });
 }
-
 const divStan = document.getElementById("stan");
 const divKuca = document.getElementById("kuca");
 const divPp = document.getElementById("pp");
@@ -36,6 +79,23 @@ const listaNekretnina = [{
     kvadratura: 20,
     cijena: 70000,
     tip_grijanja: "struja",
+    lokacija: "Centar",
+    godina_izgradnje: 2005,
+    datum_objave: "20.08.2023.",
+    opis: "Magnis dis parturient montes.",
+    upiti: [{
+        korisnik_id: 2,
+        tekst_upita: "Integer tincidunt."
+    }
+    ]
+},
+{
+    id: 3,
+    tip_nekretnine: "Kuća",
+    naziv: "Useljiva kuća Ilidza",
+    kvadratura: 150,
+    cijena: 350000,
+    tip_grijanja: "plin",
     lokacija: "Centar",
     godina_izgradnje: 2005,
     datum_objave: "20.08.2023.",

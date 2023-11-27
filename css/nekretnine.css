@@ -10,7 +10,6 @@ body {
     gap: 20px;
     justify-content: center;
 }
-
 .stanovi {
     background-color: white; 
     border: 1px solid #ccc;
@@ -27,7 +26,7 @@ body {
     width: 300px;
 }
 
-img {
+.nekretnina img {
     max-width: 100%;
     height: auto;
 }
@@ -54,7 +53,7 @@ img {
     margin: 0;
 }
 
-.detalji {
+.nekretnina button {
     display: block;
     margin: auto;
     margin-bottom: 5px;

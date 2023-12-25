@@ -1,23 +1,23 @@
 [
-    {
-      "id": 1,
-      "ime": "Neko",
-      "prezime": "Nekic",
-      "username": "username1",
-      "password": "$2a$10$iSvj2I/mtZxm/avS60qgYuF0KfUTzTeTYlSYRbq4HksQ/AuCG59a."
-    },
-    {
-      "id": 2,
-      "ime": "NovoIme",
-      "prezime": "NovoPrezime",
-      "username": "NoviUsername",
-      "password": "$2b$10$ZNt6bEXS5RHyKJEuiSdbz.29DMW4XIMWHx7J.NlFlM2AF8L8ghQ1S"
-    },
-    {
-      "id": 3,
-      "ime": "Neko3",
-      "prezime": "Nekic3",
-      "username": "username3",
-      "password": "$2a$10$BccaYoUAtjzx.h8fuhTNi.qOJRmMmb7gBNS7s6gG/TRVJTvPx/m6O"
-    }
-  ]
+  {
+    "id": 1,
+    "ime": "Neko",
+    "prezime": "Nekic",
+    "username": "username1",
+    "password": "$2a$10$iSvj2I/mtZxm/avS60qgYuF0KfUTzTeTYlSYRbq4HksQ/AuCG59a."
+  },
+  {
+    "id": 2,
+    "ime": "NovoIme",
+    "prezime": "NovoPrezime",
+    "username": "NoviUsername",
+    "password": "$2b$10$ZNt6bEXS5RHyKJEuiSdbz.29DMW4XIMWHx7J.NlFlM2AF8L8ghQ1S"
+  },
+  {
+    "id": 3,
+    "ime": "Neko3",
+    "prezime": "Nekic3",
+    "username": "username3",
+    "password": "$2a$10$BccaYoUAtjzx.h8fuhTNi.qOJRmMmb7gBNS7s6gG/TRVJTvPx/m6O"
+  }
+]

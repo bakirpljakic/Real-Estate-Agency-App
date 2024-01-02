@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/meni.css">
+    <script src="../PoziviAjax.js"></script>
+    <script src="../scripts/meni.js"></script>
     <title>Meni</title>
 </head>
 <body>
-    <ul>
-        <li><a href="profil.html" target="_parent">Profil</a></li>
-        <li><a href="nekretnine.html" target="_parent">Nekretnine</a></li>
-        <li><a href="detalji.html"  target="_parent">Detalji</a></li>
-        <li><a href="prijava.html"  target="_parent">Prijava</a></li>
+    <ul id="navigacija">
+        <li id="profil"><a href="profil.html" target="_parent">Profil</a></li>
+        <li id="nekretnine"><a href="nekretnine.html" target="_parent">Nekretnine</a></li>
+        <li id="detalji"><a href="detalji.html"  target="_parent">Detalji</a></li>
+        <li id="prijava"><a href="prijava.html"  target="_parent">Prijava</a></li>
+        <li id="odjava"><a href="prijava.html" target="_parent" onclick="odjaviSe()">Odjava</a></li>
     </ul>
 </body>
 </html>

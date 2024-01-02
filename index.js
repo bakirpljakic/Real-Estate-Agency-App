@@ -12,7 +12,6 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// Postavljanje putanje do public foldera
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/detalji.html', (req, res) => {
@@ -35,14 +34,13 @@ app.get('/profil.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/html/profil.html'));
 });
 
+
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try {
         const data = await fs.readFile('./public/data/korisnici.json', 'utf-8');
         const korisnici = JSON.parse(data);
-        console.log(korisnici);
         const foundUser = korisnici.find(user => user.username === username);
-        console.log(foundUser);
         if (foundUser) {
             try {
                 const match = await bcrypt.compare(password, foundUser.password);

@@ -6,23 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/nekretnine.css">
     <title>Nekretnine</title>
-
 </head>
 
 <body>
-    <script src="../PoziviAjax.js"></script>
-    <script src="../scripts/SpisakNekretnina.js"></script>
     <iframe src="meni.html" title="Meni"></iframe>
+
+    <div class="search-container">
+        <label for="minCijena">Minimalna cijena:</label>
+        <input type="number" id="minCijena" name="minCijena">
+
+        <label for="maxCijena">Maksimalna cijena:</label>
+        <input type="number" id="maxCijena" name="maxCijena">
+
+        <label for="minKvadratura">Minimalna kvadratura:</label>
+        <input type="number" id="minKvadratura" name="minKvadratura">
+
+        <label for="maxKvadratura">Maksimalna kvadratura:</label>
+        <input type="number" id="maxKvadratura" name="maxKvadratura">
+        
+        <button onclick="pretraziNekretnine()" class="pretrazi-button">Pretraži</button>
+    </div>
+
     <h2>Stan</h2>
     <div id="stan"></div>
     <h2>Kuća</h2>
-    <div id="kuca">
-    </div>
+    <div id="kuca"></div>
     <h2>Poslovni prostor</h2>
-    <div id="pp">
-    </div>
-    <script src="../scripts/nekretnine.js"></script>
+    <div id="pp"></div>
 
+    <script src="../PoziviAjax.js"></script>
+    <script src="../scripts/SpisakNekretnina.js"></script>
+    <script src="../scripts/nekretnine.js"></script>
 </body>
 
 </html>

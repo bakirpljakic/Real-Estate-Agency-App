@@ -63,6 +63,7 @@ body {
     border: none;
     cursor: pointer;
 }
+
 iframe{
     top: 0;
     position: fixed;
@@ -73,4 +74,29 @@ iframe{
 h2{
     text-align: center;
     color: black
+}
+.search-container{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+.pretrazi-button {
+    margin-left: 10px;
+    display: block;
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+.pretrazi-button:hover{
+    background-color: #0056b3;
+}
+#minCijena, #maxCijena, #minKvadratura, #maxKvadratura{
+    margin-left: 5px;
+    margin-right: 15px;
+}
+label{
+    font-weight: bold;
+    color: blue;
 }

@@ -17,6 +17,7 @@ let SpisakNekretnina = function () {
             if (
                 (!kriterij.tip_nekretnine || nekretnina.tip_nekretnine === kriterij.tip_nekretnine) &&
                 (!kriterij.min_kvadratura || nekretnina.kvadratura >= kriterij.min_kvadratura) &&
+                (!kriterij.max_kvadratura || nekretnina.kvadratura <= kriterij.max_kvadratura) &&
                 (!kriterij.min_cijena || nekretnina.cijena >= kriterij.min_cijena) &&
                 (!kriterij.max_cijena || nekretnina.cijena <= kriterij.max_cijena)
             ) {

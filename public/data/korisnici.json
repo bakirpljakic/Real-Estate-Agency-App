@@ -8,11 +8,12 @@
   },
   {
     "id": 2,
-    "ime": "NovoIme",
-    "prezime": "NovoPrezime",
-    "username": "NoviUsername",
-    "password": "$2b$10$ZNt6bEXS5RHyKJEuiSdbz.29DMW4XIMWHx7J.NlFlM2AF8L8ghQ1S"
-  },
+    "ime": "Neko2",
+    "prezime": "Nekic2",
+    "username": "username2",
+    "password": "$2a$12$eDDnVrbaPobqLSh3YakZZOQNKXyRp1QHTVTmJQH1epJzHVyjJf3TG"
+},
+
   {
     "id": 3,
     "ime": "Neko3",

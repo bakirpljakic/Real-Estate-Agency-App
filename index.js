@@ -40,6 +40,7 @@ app.post('/login', async (req, res) => {
     try {
         const data = await fs.readFile('./public/data/korisnici.json', 'utf-8');
         const korisnici = JSON.parse(data);
+        console.log(korisnici);
         const foundUser = korisnici.find(user => user.username === username);
         if (foundUser) {
             try {

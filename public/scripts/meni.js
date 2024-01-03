@@ -1,38 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const odjavaLink = document.getElementById('odjava');
-    const prijavaLink = document.getElementById('prijava');
-    const profilLink = document.getElementById('profil');
+    const odjavaKlik = document.getElementById('odjava');
+    const prijavaKlik = document.getElementById('prijava');
+    const profilKlik = document.getElementById('profil');
     
     function provjeriPrijavu() {
         PoziviAjax.getKorisnik(function(error, korisnik) {
             if (!error && korisnik) {
-                odjavaLink.style.display = 'block';
-                prijavaLink.style.display = 'none';
-                profilLink.style.display = 'block';
-                // Dodatno prikaži navigaciju ili druge elemente ako je korisnik prijavljen
+                odjavaKlik.style.display = 'block';
+                prijavaKlik.style.display = 'none';
+                profilKlik.style.display = 'block';
                
             } else {
-                odjavaLink.style.display = 'none';
-                prijavaLink.style.display = 'block';
-                profilLink.style.display = 'none';
-                // Dodatno prikaži navigaciju ili druge elem
-                // Sakrij navigaciju ili druge elemente ako korisnik nije prijavljen
-               
+                odjavaKlik.style.display = 'none';
+                prijavaKlik.style.display = 'block';
+                profilKlik.style.display = 'none';
+  
             }
         });
     }
 
-    provjeriPrijavu(); // Poziv funkcije prilikom učitavanja stranice
+    provjeriPrijavu(); 
 });
 
 function odjaviSe() {
     PoziviAjax.postLogout(function(error, response) {
         if (!error && response) {
-            // Uspješno odjavljivanje - možete izvršiti dodatne radnje ako je potrebno
             console.log('Uspješno ste se odjavili.');
-            // Dodajte dodatne korake ili preusmjeravanje korisnika nakon odjave
         } else {
-            // Greška prilikom odjavljivanja
             console.error('Greška prilikom odjavljivanja:', error);
         }
     });

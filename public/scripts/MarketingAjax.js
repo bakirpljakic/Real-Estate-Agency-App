@@ -93,8 +93,6 @@ const MarketingAjax = (() => {
         xhr.send();
     }
 
-
-
     return {
         osvjeziPretrage,
         osvjeziKlikove,

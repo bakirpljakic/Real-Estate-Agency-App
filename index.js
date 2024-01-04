@@ -11,7 +11,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
-
+//hash();
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/detalji.html', (req, res) => {
@@ -33,25 +33,23 @@ app.get('/prijava.html', (req, res) => {
 app.get('/profil.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/html/profil.html'));
 });
-
-hash();
-
+/*
 async function hash() {
     try {
-        const data = await fs.promises.readFile('public/data/korisnici.json', { encoding: 'utf-8' });
-        const users = JSON.parse(data);
-        for (let user of users) {
-            if (!user.password.startsWith('$2b$')) {
-                const hashedPassword = await bcrypt.hash(user.password, 10);
-                user.password = hashedPassword;
-            }
-        }
-        const updatedData = JSON.stringify(users, null, 2);
-        await fs.promises.writeFile('public/data/korisnici.json', updatedData);
+      const rawdata = await fs.readFile('public/data/korisnici.json', { encoding: 'utf-8' });
+      const korisnici = JSON.parse(rawdata);
+    
+      await Promise.all(korisnici.map(async (korisnik) => {
+        if(!korisnik.password.startsWith('$2b$')){
+        const hashPassword = await bcrypt.hash(korisnik.password, 10);
+        korisnik.password = hashPassword; 
+     } }));
+      await fs.writeFile('public/data/korisnici.json', JSON.stringify(korisnici, null, 2));
     } catch (error) {
-        console.error('Error:', error);
+      console.error('Error:', error);
     }
-}
+  }
+*/
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
@@ -112,13 +110,17 @@ app.put('/korisnik', async (req, res) => {
         return res.status(401).json({ "greska": "Neautorizovan pristup" });
     }
     try {
-        const index = korisnici.findIndex(korisnik => korisnik.username === username);
+        const index = korisnici.findIndex(korisnik => korisnik.username === req.session.username);
         if (index === -1) {
             return res.status(404).json({ "greska": "Korisnik nije pronađen" });
         }
-        if (ime) korisnici[index].ime = ime;
-        if (prezime) korisnici[index].prezime = prezime;
-        if (password) korisnici[index].password = password;
+       korisnici[index] = {
+                ...korisnici[index],
+                ime: ime || korisnici[index].ime,
+                prezime: prezime || korisnici[index].prezime,
+                username: username || korisnici[index].username,
+                password: password ? await bcrypt.hash(password, 10) : korisnici[index].password,
+            };
         await fs.writeFile('./public/data/korisnici.json', JSON.stringify(korisnici, null, 2));
         return res.status(200).json({ "poruka": "Podaci su uspješno ažurirani" });
     } catch (error) {

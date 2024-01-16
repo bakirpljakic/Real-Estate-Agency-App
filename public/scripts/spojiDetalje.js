@@ -79,19 +79,12 @@ function postaviUpit() {
     const noviUpitTekstInput = document.getElementById('noviUpitTekst');
     const noviUpitTekst = noviUpitTekstInput.value;
 
-    // Pozovite metodu za postavljanje novog upita
     PoziviAjax.postUpit(nekretninaId, noviUpitTekst, function (error, response) {
         if (!error) {
-            // Osvježite stranicu
             noviUpitTekstInput.value = '';
             location.reload();
-            
-            // Očistite sadržaj text inputa
-           
-
-            console.log('Upit uspješno postavljen!');
+           // console.log('Upit uspješno postavljen!');
         } else {
-            // Greška pri postavljanju upita
             console.error('Greška pri postavljanju upita:', error);
         }
     });

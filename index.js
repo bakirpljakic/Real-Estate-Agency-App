@@ -280,11 +280,9 @@ app.get('/nekretnina/:id', async (req, res) => {
         const nekretnina = await db.Nekretnina.findByPk(nekretninaId, {
             include: [{ model: db.Upit, include: [db.Korisnik] }]
         });
-
         if (!nekretnina) {
             return res.status(404).json({ error: 'Nekretnina nije pronađena.' });
         }
-
         res.json(nekretnina);
     } catch (error) {
         console.error('Greška prilikom dohvaćanja podataka o nekretnini i upitima:', error);

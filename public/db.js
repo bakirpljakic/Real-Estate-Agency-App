@@ -24,9 +24,8 @@ db.Nekretnina = require('./models/Nekretnina')(sequelize, Sequelize);
 db.Upit = require('./models/Upit')(sequelize, Sequelize);
 
 
-db.Nekretnina.hasMany(db.Upit, { foreignKey: 'nekretnina_id' });
+db.Nekretnina.hasMany(db.Upit, { foreignKey: 'nekretnina_id'});
 db.Upit.belongsTo(db.Nekretnina, { foreignKey: 'nekretnina_id' });
-
 db.Korisnik.hasMany(db.Upit, { foreignKey: 'korisnik_id' });
 db.Upit.belongsTo(db.Korisnik, { foreignKey: 'korisnik_id' });
 

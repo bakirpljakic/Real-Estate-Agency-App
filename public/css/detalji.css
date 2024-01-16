@@ -53,3 +53,39 @@ iframe{
     top: 0;
     margin-bottom: 150px;
 }
+#noviUpit {
+    margin-right: 25%;
+    margin-left: 4%;
+
+}
+
+#noviUpitForm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    
+}
+
+#noviUpitTekst {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px;
+}
+
+#noviUpitTekst::placeholder {
+    color: #000000; 
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}

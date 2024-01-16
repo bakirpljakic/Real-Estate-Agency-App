@@ -135,8 +135,6 @@ function povecajDetalje(id, nekretnina) {
     btnOtvoriDetalje.classList.add("btn-detalji");
     btnOtvoriDetalje.textContent = "Otvori detalje";
     btnOtvoriDetalje.addEventListener("click", function () {
-       
-            // Redirekcija na detalji.html s ID-om trenutne nekretnine
             window.location.href = `/detalji.html?id=${id}`;
        
     });

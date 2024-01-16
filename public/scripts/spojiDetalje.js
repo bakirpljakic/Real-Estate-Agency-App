@@ -11,7 +11,7 @@ PoziviAjax.getNekretninaById(nekretninaId, function (error, nekretninaData) {
     // Postavite osnovne informacije o nekretnini
     document.getElementById('osnovno').innerHTML = `
         <h3>OSNOVNO</h3>
-        <img src = "https://prostor.ba/img/s/1200x800/upload/images/properties/11651/35a77b5a368c0cb5fa3c19e4d1f3e7a7.jpg" alt="Slika nekretnine">
+        <img src="https://prostor.ba/img/s/1200x800/upload/images/properties/11651/35a77b5a368c0cb5fa3c19e4d1f3e7a7.jpg" alt="Slika nekretnine">
         <p><strong>Naziv:</strong> ${nekretninaData.naziv}</p>
         <br>
         <p><strong>Kvadratura:</strong> ${nekretninaData.kvadratura} m2</p>
@@ -35,13 +35,13 @@ PoziviAjax.getNekretninaById(nekretninaId, function (error, nekretninaData) {
         </div>
         <p class="opis"><strong>Opis: </strong>${nekretninaData.opis}</p>
     `;
-    
+
     const upitiList = document.getElementById('upiti').getElementsByTagName('ul')[0];
 
     if (upitiList) {  // Provjera postojanja upitiList
         // Koristite dinamičko određivanje polja: Upit ili Upits
         const upitiDataArray = nekretninaData['Upit' + (nekretninaData.Upits ? 's' : '')];
-    
+
         upitiDataArray.forEach(function (upit) {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
@@ -54,3 +54,45 @@ PoziviAjax.getNekretninaById(nekretninaId, function (error, nekretninaData) {
         console.error("Element 'upiti' ili 'ul' nije pronađen.");
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Uzmite trenutno prijavljenog korisnika
+    PoziviAjax.getKorisnik(function (error, korisnikData) {
+        if (!error) {
+            // Provjerite da li je korisnik prijavljen
+            if (korisnikData && korisnikData.id) {
+                // Ako je prijavljen, pokažite formu za novi upit
+                prikaziFormuZaUpit();
+            }
+        }
+    });
+});
+
+// Funkcija za prikazivanje forme za novi upit
+function prikaziFormuZaUpit() {
+    const noviUpitContainer = document.getElementById('noviUpit');
+    noviUpitContainer.style.display = 'block';
+}
+
+// Funkcija za postavljanje novog upita
+function postaviUpit() {
+    const noviUpitTekstInput = document.getElementById('noviUpitTekst');
+    const noviUpitTekst = noviUpitTekstInput.value;
+
+    // Pozovite metodu za postavljanje novog upita
+    PoziviAjax.postUpit(nekretninaId, noviUpitTekst, function (error, response) {
+        if (!error) {
+            // Osvježite stranicu
+            noviUpitTekstInput.value = '';
+            location.reload();
+            
+            // Očistite sadržaj text inputa
+           
+
+            console.log('Upit uspješno postavljen!');
+        } else {
+            // Greška pri postavljanju upita
+            console.error('Greška pri postavljanju upita:', error);
+        }
+    });
+}

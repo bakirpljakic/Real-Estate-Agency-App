@@ -4,6 +4,7 @@ const session = require('express-session');
 const app = express();
 const bcrypt = require('bcrypt');
 const fs = require('fs').promises;
+const db = require('./public/db.js');
 
 app.use(express.json());
 app.use(session({
@@ -12,6 +13,7 @@ app.use(session({
     saveUninitialized: true
 }));
 //hash();
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/detalji.html', (req, res) => {
@@ -54,9 +56,10 @@ async function hash() {
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try {
-        const data = await fs.readFile('./public/data/korisnici.json', 'utf-8');
-        const korisnici = JSON.parse(data);
-        const foundUser = korisnici.find(user => user.username === username);
+        const foundUser = await db.Korisnik.findOne({
+            where: { username: username }
+        });
+
         if (foundUser) {
             try {
                 const match = await bcrypt.compare(password, foundUser.password);
@@ -74,7 +77,7 @@ app.post('/login', async (req, res) => {
             return res.status(401).json({ "greska": "Neuspješna prijava" });
         }
     } catch (error) {
-        console.error('Greška prilikom čitanja datoteke korisnici.json:', error);
+        console.error('Greška prilikom čitanja korisničkih podataka iz baze:', error);
         return res.status(500).json({ "greska": "Greška prilikom čitanja korisničkih podataka" });
     }
 });
@@ -88,56 +91,71 @@ app.post('/logout', (req, res) => {
     }
 });
 
+
 app.get('/korisnik', async (req, res) => {
     try {
-        const data = await fs.readFile('./public/data/korisnici.json', 'utf-8');
-        const korisnici = JSON.parse(data);
-        const prijavljeniKorisnik = korisnici.find(korisnik => korisnik.username === req.session.username);
+        if (!req.session.username) {
+            return res.status(401).json({ "greska": "Neautorizovan pristup" });
+        }
+        const prijavljeniKorisnik = await db.Korisnik.findOne({
+            where: { username: req.session.username }
+        });
         if (!prijavljeniKorisnik) {
             return res.status(401).json({ "greska": "Neautorizovan pristup" });
         }
-        return res.status(200).json(prijavljeniKorisnik);
+        return res.status(200).json({
+            id: prijavljeniKorisnik.id,
+            ime: prijavljeniKorisnik.ime,
+            prezime: prijavljeniKorisnik.prezime,
+            username: prijavljeniKorisnik.username,
+        });
     } catch (error) {
+        console.error('Greška prilikom čitanja korisničkih podataka iz baze:', error);
         return res.status(500).json({ "greska": "Greška prilikom čitanja korisničkih podataka" });
     }
 });
 
+
+
 app.put('/korisnik', async (req, res) => {
     const { ime, prezime, username, password } = req.body;
-    const data = await fs.readFile('./public/data/korisnici.json', 'utf-8');
-    const korisnici = JSON.parse(data);
+
     if (!req.session.username) {
         return res.status(401).json({ "greska": "Neautorizovan pristup" });
     }
+
     try {
-        const index = korisnici.findIndex(korisnik => korisnik.username === req.session.username);
-        if (index === -1) {
+        const prijavljeniKorisnik = await db.Korisnik.findOne({
+            where: { username: req.session.username }
+        });
+
+        if (!prijavljeniKorisnik) {
             return res.status(404).json({ "greska": "Korisnik nije pronađen" });
         }
-       korisnici[index] = {
-                ...korisnici[index],
-                ime: ime || korisnici[index].ime,
-                prezime: prezime || korisnici[index].prezime,
-                username: username || korisnici[index].username,
-                password: password ? await bcrypt.hash(password, 10) : korisnici[index].password,
-            };
-        await fs.writeFile('./public/data/korisnici.json', JSON.stringify(korisnici, null, 2));
+
+        await prijavljeniKorisnik.update({
+            ime: ime || prijavljeniKorisnik.ime,
+            prezime: prezime || prijavljeniKorisnik.prezime,
+            username: username || prijavljeniKorisnik.username,
+            password: password ? await bcrypt.hash(password, 10) : prijavljeniKorisnik.password,
+        });
+
         return res.status(200).json({ "poruka": "Podaci su uspješno ažurirani" });
     } catch (error) {
+        console.error('Greška prilikom ažuriranja korisničkih podataka u bazi:', error);
         return res.status(500).json({ "greska": "Greška prilikom ažuriranja korisničkih podataka" });
     }
 });
+
 app.get('/nekretnine', async (req, res) => {
     try {
-        const data = await fs.readFile('./public/data/nekretnine.json', 'utf-8');
-        const nekretnine = JSON.parse(data);
+        const nekretnine = await db.Nekretnina.findAll();
         return res.status(200).json(nekretnine);
     } catch (error) {
-        console.error('Greška prilikom dohvata nekretnina:', error);
+        console.error('Greška prilikom dohvata nekretnina iz baze:', error);
         return res.status(500).json({ "greska": "Greška prilikom dohvata nekretnina" });
     }
 });
-
 app.post('/upit', async (req, res) => {
     const { nekretnina_id, tekst_upita } = req.body;
 
@@ -146,32 +164,31 @@ app.post('/upit', async (req, res) => {
     }
 
     try {
-        const korisniciData = await fs.readFile('./public/data/korisnici.json', 'utf-8');
-        const korisnici = JSON.parse(korisniciData);
+        const loggedInUser = await db.Korisnik.findOne({
+            where: { username: req.session.username }
+        });
 
-        const loggedInUser = korisnici.find(user => user.username === req.session.username);
         if (!loggedInUser) {
             return res.status(401).json({ "greska": "Neautorizovan pristup" });
         }
 
-        const nekretnineData = await fs.readFile('./public/data/nekretnine.json', 'utf-8');
-        const nekretnine = JSON.parse(nekretnineData);
+        const targetNekretnina = await db.Nekretnina.findOne({
+            where: { id: nekretnina_id }
+        });
 
-        const targetNekretnina = nekretnine.find(nekretnina => nekretnina.id === nekretnina_id);
         if (!targetNekretnina) {
             return res.status(400).json({ "greska": `Nekretnina sa id-em ${nekretnina_id} ne postoji` });
         }
 
-        targetNekretnina.upiti.push({
+        await db.Upit.create({
             korisnik_id: loggedInUser.id,
+            nekretnina_id: targetNekretnina.id,
             tekst_upita: tekst_upita
         });
 
-        await fs.writeFile('./public/data/nekretnine.json', JSON.stringify(nekretnine, null, 2));
-
         return res.status(200).json({ "poruka": "Upit je uspješno dodan" });
     } catch (error) {
-        console.error('Greška prilikom dodavanja upita:', error);
+        console.error('Greška prilikom dodavanja upita u bazu:', error);
         return res.status(500).json({ "greska": "Greška prilikom dodavanja upita" });
     }
 });
@@ -180,24 +197,15 @@ app.post('/marketing/nekretnine', async (req, res) => {
     try {
         const { nizNekretnina } = req.body;
 
-        let data = await fs.readFile('./public/data/preferencije.json', 'utf8');
-        let nekretnine = JSON.parse(data);
-
-        nizNekretnina.forEach(id => {
-            const nekretnina = nekretnine.find(item => item.id === id);
-
-            if (nekretnina) {
-                nekretnina.pretrage++;
-            } else {
-                nekretnine.push({
-                    id: id,
-                    pretrage: 1,
-                    klikovi: 0
-                });
-            }
+        const nekretnine = await db.Nekretnina.findAll({
+            where: { id: nizNekretnina }
         });
 
-        await fs.writeFile('./public/data/preferencije.json', JSON.stringify(nekretnine, null, 2), 'utf8');
+        for (const nekretnina of nekretnine) {
+            nekretnina.pretrage++;
+            await nekretnina.save();
+        }
+
         res.status(200).send('Uspješno ažurirano');
     } catch (err) {
         console.error(err);
@@ -209,21 +217,16 @@ app.post('/marketing/nekretnina/:id', async (req, res) => {
     try {
         const id = parseInt(req.params.id);
 
-        let data = await fs.readFile('./public/data/preferencije.json', 'utf8');
-        let nekretnine = JSON.parse(data);
+        const [nekretnina, created] = await db.Nekretnina.findOrCreate({
+            where: { id: id },
+            defaults: { pretrage: 0, klikovi: 1 }
+        });
 
-        const nekretnina = nekretnine.find(item => item.id === id);
-
-        if (nekretnina) {
+        if (!created) {
             nekretnina.klikovi++;
-        } else {
-            nekretnine.push({
-                id: id,
-                pretrage: 0,
-                klikovi: 1
-            });
+            await nekretnina.save();
         }
-        await fs.writeFile('./public/data/preferencije.json', JSON.stringify(nekretnine, null, 2), 'utf8');
+
         res.status(200).send('Uspješno ažurirano');
     } catch (err) {
         console.error(err);
@@ -232,28 +235,61 @@ app.post('/marketing/nekretnina/:id', async (req, res) => {
 });
 
 app.post("/marketing/osvjezi", async function (req, res) {
-    let pomocnaOsvjezi = req.session["pomocnaOsvjezi"];
-    let osvjeziID = [];
-    if (req.body["nizNekretnina"]) {
-        osvjeziID = req.body["nizNekretnina"];
-    } else {
-        for (let nekretnina of pomocnaOsvjezi)
-            osvjeziID.push(nekretnina["id"]);
-    }
-    let data = await fs.readFile('./public/data/preferencije.json', 'utf8');
-    let osvjezi = JSON.parse(data);
-    osvjezi = osvjezi.filter(x => osvjeziID.find(y => x["id"] == y));
-    req.session["pomocnaOsvjezi"] = osvjezi;
-    if (!req.body["nizNekretnina"]) {
-        osvjezi = osvjezi.filter(osvjeziNekretnina => {
-            return !pomocnaOsvjezi.find(pomocna => (
-                osvjeziNekretnina["id"] === pomocna["id"] &&
-                osvjeziNekretnina["klikovi"] === pomocna["klikovi"] &&
-                osvjeziNekretnina["pretrage"] === pomocna["pretrage"]
-            ));
+    try {
+        let pomocnaOsvjezi = req.session["pomocnaOsvjezi"];
+        let osvjeziID = [];
+
+        if (req.body["nizNekretnina"]) {
+            osvjeziID = req.body["nizNekretnina"];
+        } else {
+            for (let nekretnina of pomocnaOsvjezi)
+                osvjeziID.push(nekretnina["id"]);
+        }
+
+        const osvjezi = await db.Nekretnina.findAll({
+            attributes: ['id', 'pretrage', 'klikovi'],
+            where: { id: osvjeziID }
         });
+
+        req.session["pomocnaOsvjezi"] = osvjezi;
+
+        if (!req.body["nizNekretnina"]) {
+            const filteredOsvjezi = osvjezi.filter(osvjeziNekretnina => {
+                return !pomocnaOsvjezi.find(pomocna => (
+                    osvjeziNekretnina.id === pomocna.id &&
+                    osvjeziNekretnina.klikovi === pomocna.klikovi &&
+                    osvjeziNekretnina.pretrage === pomocna.pretrage
+                ));
+            });
+
+            return res.status(200).json({ "nizNekretnina": filteredOsvjezi });
+        }
+
+        return res.status(200).json({ "nizNekretnina": osvjezi });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ "greska": "Greška prilikom obrade zahtjeva" });
     }
-    return res.status(200).json({ "nizNekretnina": osvjezi });
+});
+
+// Dodajte novu rutu koja će vraćati nekretninu i pripadajuće upite
+app.get('/nekretnina/:id', async (req, res) => {
+    const nekretninaId = req.params.id;
+
+    try {
+        const nekretnina = await db.Nekretnina.findByPk(nekretninaId, {
+            include: [{ model: db.Upit, include: [db.Korisnik] }]
+        });
+
+        if (!nekretnina) {
+            return res.status(404).json({ error: 'Nekretnina nije pronađena.' });
+        }
+
+        res.json(nekretnina);
+    } catch (error) {
+        console.error('Greška prilikom dohvaćanja podataka o nekretnini i upitima:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
 app.listen(3000);

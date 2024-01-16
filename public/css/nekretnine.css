@@ -105,3 +105,10 @@ label{
     font-weight: bold;
     color: blue;
 }
+.lokacija{
+    margin-left: 10px;
+}
+.godina-izgradnje{
+    margin-top: 1px;
+    margin-left: 10px;
+}

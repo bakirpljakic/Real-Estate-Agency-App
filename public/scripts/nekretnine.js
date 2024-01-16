@@ -62,7 +62,7 @@ function spojiNekretnine(divReferenca, listaNekretnina, tip_nekretnine) {
         buttonDetalji.classList.add("detalji");
         buttonDetalji.textContent = "Detalji";
         buttonDetalji.addEventListener('click', function () {
-            povecajDetalje(nekretnina.id);
+            povecajDetalje(nekretnina.id, nekretnina);
         });
 
         if (nekretnina.tip_nekretnine === "Stan") {
@@ -88,20 +88,64 @@ function spojiNekretnine(divReferenca, listaNekretnina, tip_nekretnine) {
 }
 
 
-function povecajDetalje(id) {
+let trenutnaAktivnaNekretnina = null;
+
+function povecajDetalje(id, nekretnina) {
     MarketingAjax.klikNekretnina(id);
     const kartica = document.getElementById(id);
     document.querySelectorAll(".nekretnina").forEach((karta) => {
         karta.style.width = "300px";
         karta.style.gridColumn = "span 1";
-    })
+    });
+
     kartica.style.width = "500px";
     kartica.style.gridColumn = "span 2";
+
+    if (id === trenutnaAktivnaNekretnina) {
+        return;
+    }
+
+    // Sakrij informacije za trenutnu aktivnu nekretninu ako postoji
+    if (trenutnaAktivnaNekretnina) {
+        const prethodnaKartica = document.getElementById(trenutnaAktivnaNekretnina);
+        const prethodniDivInformacije = prethodnaKartica.querySelector(".info");
+        if (prethodniDivInformacije) {
+            prethodniDivInformacije.remove();
+        }
+    }
+
+
+    trenutnaAktivnaNekretnina = id;
+
+    const divInformacije = document.createElement("div");
+    divInformacije.classList.add("info");
+
+    const lokacija = document.createElement("div");
+    lokacija.classList.add("lokacija");
+    lokacija.textContent = `Lokacija: ${nekretnina.lokacija}`;
+
+    const godinaIzgradnje = document.createElement("div");
+    godinaIzgradnje.classList.add("godina-izgradnje");
+    godinaIzgradnje.textContent = `Godina izgradnje: ${nekretnina.godina_izgradnje}`;
+
+    divInformacije.appendChild(lokacija);
+    divInformacije.appendChild(godinaIzgradnje);
+
+    const btnOtvoriDetalje = document.createElement("button");
+    btnOtvoriDetalje.classList.add("btn-detalji");
+    btnOtvoriDetalje.textContent = "Otvori detalje";
+    btnOtvoriDetalje.addEventListener("click", function () {
+       
+            // Redirekcija na detalji.html s ID-om trenutne nekretnine
+            window.location.href = `/detalji.html?id=${id}`;
+       
+    });
+
+    divInformacije.appendChild(btnOtvoriDetalje);
+    kartica.appendChild(divInformacije);
 }
 
-
 function pretraziNekretnine() {
-
 
     const min_cijena_input = document.getElementById("minCijena");
     const max_cijena_input = document.getElementById("maxCijena");

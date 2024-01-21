@@ -17,7 +17,6 @@ const sequelize = new Sequelize('wt24', 'root', 'password', {
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-//db.sequelize.options.logging = console.log;
 
 db.Korisnik = require('./models/Korisnik')(sequelize, Sequelize);
 db.Nekretnina = require('./models/Nekretnina')(sequelize, Sequelize);

@@ -53,8 +53,5 @@ module.exports = function(sequelize, DataTypes) {
       },
   });
 
-  // Definiranje asocijacije sa tabelom "Upiti"
-  //Nekretnina.hasMany(sequelize.models.Upit, { foreignKey: 'nekretnina_id' });
-
   return Nekretnina;
 };

@@ -1,7 +1,18 @@
-const urlParams = new URLSearchParams(window.location.search);
-const nekretninaId = urlParams.get('id');
+document.addEventListener("DOMContentLoaded", function () {
+    PoziviAjax.getKorisnik(function (error, korisnikData) {
+        if (!error) {
+            if (korisnikData && korisnikData.id) {
+                prikaziFormuZaUpit();
+            }
+        }
+    });
+});
 
-// Funkcija za postavljanje novog upita
+function prikaziFormuZaUpit() {
+    const noviUpitContainer = document.getElementById('noviUpit');
+    noviUpitContainer.style.display = 'block';
+}
+
 function postaviUpit() {
     const noviUpitTekstInput = document.getElementById('noviUpitTekst');
     const noviUpitTekst = noviUpitTekstInput.value;
@@ -10,7 +21,6 @@ function postaviUpit() {
         if (!error) {
             noviUpitTekstInput.value = '';
             location.reload();
-           // console.log('Upit uspješno postavljen!');
         } else {
             console.error('Greška pri postavljanju upita:', error);
         }

@@ -12,29 +12,27 @@ function inicializacija() {
     var nekretnineListaPromisea = [];
 
     return new Promise(function (resolve, reject) {
-        // Prvo, kreiraj dva korisnika
         db.Korisnik.bulkCreate([
             {
-                ime: 'Bakir',
-                prezime: 'Pljakic',
-                username: 'bakir',
-                password: '$2b$10$T3Jo6bcjhDtQrsgD2/xTU.b8kjw6as/JkP0JRuiwFknVn9xgGYWre',
+                ime: "Neko",
+                prezime: "Nekic",
+                username: "username1",
+                password: "$2b$10$T3Jo6bcjhDtQrsgD2/xTU.b8kjw6as/JkP0JRuiwFknVn9xgGYWre"
             },
             {
-                ime: 'Safet',
-                prezime: 'Doe',
-                username: 'jane.doe',
-                password: 'password456',
+                ime: "Neko2",
+                prezime: "Nekic2",
+                username: "username2",
+                password: "$2b$10$jq1DplsYdpQfEkzJx1ixyOOhhvDMxmuf0Y8RYK24wIUyi7ERnGCUa"
             },
         ]).then(function (korisnici) {
-            // Dodaj Upite vezane uz korisnike
             korisnik1 = korisnici[0];
             korisnik2 = korisnici[1];
-            
-            // Dodaj dvije nekretnine s povezanim upitima
+
+
             nekretnineListaPromisea.push(db.Nekretnina.create({
                 tip_nekretnine: 'Stan',
-                naziv: 'Lijepi stan',
+                naziv: 'Cetverosoban stan',
                 kvadratura: 80,
                 cijena: 120000,
                 tip_grijanja: 'Centralno',
@@ -42,10 +40,9 @@ function inicializacija() {
                 godina_izgradnje: 2010,
                 datum_objave: '2024-01-14',
                 opis: 'Predivan stan u centru grada.',
-                pretrage: 58,
-                klikovi: 34
+                pretrage: 0,
+                klikovi: 0
             }).then(function (nekretnina) {
-                // Dodaj Upite vezane uz korisnike
                 return nekretnina.createUpit({
                     tekst_upita: 'Ima li parking?',
                     korisnik_id: korisnik1.id,
@@ -54,7 +51,7 @@ function inicializacija() {
 
             nekretnineListaPromisea.push(db.Nekretnina.create({
                 tip_nekretnine: 'Kuća',
-                naziv: 'Velika kuća',
+                naziv: 'Dvospratba kuca',
                 kvadratura: 200,
                 cijena: 250000,
                 tip_grijanja: 'Plinsko',
@@ -62,8 +59,8 @@ function inicializacija() {
                 godina_izgradnje: 2005,
                 datum_objave: '2024-01-14',
                 opis: 'Prostrana kuća u mirnom predgrađu.',
-                pretrage: 42,
-                klikovi: 20,
+                pretrage: 0,
+                klikovi: 0,
                 Upiti: [
                     {
                         tekst_upita: 'Koliko soba ima?',
@@ -76,9 +73,28 @@ function inicializacija() {
                 ],
             }));
 
+            nekretnineListaPromisea.push(db.Nekretnina.create({
+                tip_nekretnine: 'Poslovni prostor',
+                naziv: 'Mali poslovni prostor',
+                kvadratura: 20,
+                cijena: 70000,
+                tip_grijanja: 'struja',
+                lokacija: 'Centar',
+                godina_izgradnje: 2005,
+                datum_objave: '2024-01-14',
+                opis: 'Magnis dis parturient montes.',
+                pretrage: 0,
+                klikovi: 0,
+                Upiti: [
+                    {
+                        tekst_upita: 'Koliko kvadrata?',
+                        KorisnikId: korisnik1.id,
+                    }
+                ],
+            }));
+
             return Promise.all(nekretnineListaPromisea);
         }).then(function (nekretnine) {
-            // Ako želiš nešto raditi s kreiranim podacima, možeš to ovdje dodati.
             resolve(nekretnine);
         }).catch(function (err) {
             console.log("Nekretnine greska " + err);

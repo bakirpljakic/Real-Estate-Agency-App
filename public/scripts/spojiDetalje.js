@@ -1,4 +1,3 @@
-// Uzmite podatke o nekretnini s servera (koristeći prethodno definisanu metodu)
 const urlParams = new URLSearchParams(window.location.search);
 const nekretninaId = urlParams.get('id');
 
@@ -8,7 +7,7 @@ PoziviAjax.getNekretninaById(nekretninaId, function (error, nekretninaData) {
         return;
     }
 
-    // Postavite osnovne informacije o nekretnini
+   
     document.getElementById('osnovno').innerHTML = `
         <h3>OSNOVNO</h3>
         <img src="https://prostor.ba/img/s/1200x800/upload/images/properties/11651/35a77b5a368c0cb5fa3c19e4d1f3e7a7.jpg" alt="Slika nekretnine">
@@ -20,7 +19,7 @@ PoziviAjax.getNekretninaById(nekretninaId, function (error, nekretninaData) {
         <br>
     `;
 
-    // Postavite dodatne informacije o nekretnini
+
     document.getElementById('detalji').innerHTML = `
         <h3>DETALJI</h3>
         <div class="grid">
@@ -38,8 +37,7 @@ PoziviAjax.getNekretninaById(nekretninaId, function (error, nekretninaData) {
 
     const upitiList = document.getElementById('upiti').getElementsByTagName('ul')[0];
 
-    if (upitiList) {  // Provjera postojanja upitiList
-        // Koristite dinamičko određivanje polja: Upit ili Upits
+    if (upitiList) {  
         const upitiDataArray = nekretninaData['Upit' + (nekretninaData.Upits ? 's' : '')];
 
         upitiDataArray.forEach(function (upit) {
@@ -54,23 +52,4 @@ PoziviAjax.getNekretninaById(nekretninaId, function (error, nekretninaData) {
         console.error("Element 'upiti' ili 'ul' nije pronađen.");
     }
 });
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Uzmite trenutno prijavljenog korisnika
-    PoziviAjax.getKorisnik(function (error, korisnikData) {
-        if (!error) {
-            // Provjerite da li je korisnik prijavljen
-            if (korisnikData && korisnikData.id) {
-                // Ako je prijavljen, pokažite formu za novi upit
-                prikaziFormuZaUpit();
-            }
-        }
-    });
-});
-
-// Funkcija za prikazivanje forme za novi upit
-function prikaziFormuZaUpit() {
-    const noviUpitContainer = document.getElementById('noviUpit');
-    noviUpitContainer.style.display = 'block';
-}
 

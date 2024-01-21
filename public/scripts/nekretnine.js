@@ -105,7 +105,6 @@ function povecajDetalje(id, nekretnina) {
         return;
     }
 
-    // Sakrij informacije za trenutnu aktivnu nekretninu ako postoji
     if (trenutnaAktivnaNekretnina) {
         const prethodnaKartica = document.getElementById(trenutnaAktivnaNekretnina);
         const prethodniDivInformacije = prethodnaKartica.querySelector(".info");
@@ -136,7 +135,7 @@ function povecajDetalje(id, nekretnina) {
     btnOtvoriDetalje.textContent = "Otvori detalje";
     btnOtvoriDetalje.addEventListener("click", function () {
             window.location.href = `/detalji.html?id=${id}`;
-       
+            
     });
 
     divInformacije.appendChild(btnOtvoriDetalje);
